@@ -6,6 +6,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" >
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
@@ -74,13 +77,39 @@
 	</nav>
 </footer>
 <aside id="modale1" class="modale" aria-hidden="true" role="dialog" style="display: none;">
-	<div class="modal_wraper modale_stop">
+	<div id="modale_stop1" class="modal_wraper">
+		<div class="close">
+			<i id="closeModale" class="fa-solid fa-xmark"></i>
+		</div>
 		<h3>Galerie photo</h3>
 		<div class="cards">
 
 		</div>
 		<div class="card__input">
-			<input type="submit" value="Ajouter une photo">
+			<input id="buttonAdd" type="submit" value="Ajouter une photo">
+		</div>
+	</div>
+</aside>
+<aside id="modale2" class="modale" aria-hidden="true" role="dialog" style="display: none;">
+	<div id="modale_stop2" class="modal_wraper">
+		<div class="close__modale2">
+			<i id="back" class="fa-solid fa-arrow-left"></i>
+			<i id="closeModale2" class="fa-solid fa-xmark"></i>
+		</div>
+		<h3>Ajout photo</h3>
+		<div class="form">
+			<div class="add__image">
+				<i class="fa-regular fa-image"></i>
+				<input type="file" name="file" id="file" accept=".jpg, .png">
+				<p>jpg, png : 4mo max</p>
+			</div>
+			<label for="titre">Titre</label>
+			<input type="text" name="" id="">
+			<label for="categorie">Categorie</label>
+			<select name="categorie" id="categorie"></select>
+		</div>
+		<div class="card__input">
+			<input class="buttonOff" type="submit" value="Valider">
 		</div>
 	</div>
 </aside>

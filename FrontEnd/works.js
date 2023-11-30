@@ -1,6 +1,6 @@
 import { fetchJson } from "./Functions/api.js";
 import { erreurPojet } from "./Functions/erreur.js";
-import { affichageModale, fermeModale } from "./modale.js";
+import { affichageModale, affichageModaleAjoutPhoto, fermeModale, fermeModaleAjoutPhoto, genererPhoto } from "./modale.js";
 
 
 try {
@@ -9,6 +9,7 @@ try {
     console.log(projet)
     // appelle de la fonction de création des fiches.
     genererWorks(projet);
+    genererPhoto(projet);
 
     // récupération de la base de donner des catégorie
     const categories = await fetch("http://localhost:5678/api/categories").then(projet => projet.json());
@@ -96,6 +97,14 @@ try {
 }
 
 
-// fonction pour afficher ou fermé la modale.
-affichageModale()
-fermeModale()
+// fonction pour afficher ou fermé les modales.
+affichageModale();
+fermeModale();
+affichageModaleAjoutPhoto();
+fermeModaleAjoutPhoto();
+
+const file = document.getElementById("file")
+file.addEventListener("change", function() {
+    console.log(file);
+})
+console.log(file);
