@@ -14,3 +14,15 @@ export async function erreurPojet(message){
     const pErreurElement = document.querySelector("#portfolio div p");
     pErreurElement.classList.add("txt__error");
 }
+
+// fonction de génération du html de l'erreur login
+
+export async function notAuthorized(message) {
+    const errorLogin = document.getElementById("errorLogin");
+    const pErreur = document.createElement("p");
+    pErreur.innerText = message;
+    errorLogin.appendChild(pErreur);
+    errorLogin.classList.add("error");
+    const pErreurElement = document.querySelector("#login div p");
+    pErreurElement.classList.add("txt__error");
+}

@@ -1,6 +1,13 @@
 import { fetchJson } from "./Functions/api.js";
 import { erreurPojet } from "./Functions/erreur.js";
-import { affichageModale, affichageModaleAjoutPhoto, fermeModale, fermeModaleAjoutPhoto, genererPhoto } from "./modale.js";
+import { affichageModale, affichageModaleAjoutPhoto, can, changeColoreValidate, fermeModale, fermeModaleAjoutPhoto, genererCategorie, genererPhoto, loadingImage } from "./modale.js";
+
+const token = sessionStorage.getItem("token");
+if(token){
+    login();
+    hiddenFilter();
+    modify();
+}
 
 
 try {
@@ -102,9 +109,51 @@ affichageModale();
 fermeModale();
 affichageModaleAjoutPhoto();
 fermeModaleAjoutPhoto();
+genererCategorie();
+changeColoreValidate();
+loadingImage();
+can();
 
 const file = document.getElementById("file")
 file.addEventListener("change", function() {
     console.log(file);
 })
 console.log(file);
+
+// fonction de modification de la page quand on est log
+// fonction quand on est log
+function login(){
+    const logout = document.getElementById("indexLogout");
+    const login = document.getElementById("indexLogin");
+    login.classList.add("dispnone");
+    logout.classList.remove("dispnone");    
+}
+
+// fonction pour ce logout
+const logout = document.getElementById("indexLogout");
+    logout.addEventListener("click", function(){
+        sessionStorage.removeItem("token");
+    })
+
+// fonction pour cacher les filtres
+function hiddenFilter(){
+    const buttonFilter = document.querySelector("#portfolio .filtre");
+    buttonFilter.innerHTML = "";
+}
+
+// fonction pour ajouter le bouton modifier
+function modify(){
+    const buttonFilter = document.querySelector("#portfolio .filtre");
+    const divModify = document.createElement("div");
+    const logoModify = document.createElement("i");
+    const linkModify = document.createElement("a");
+    divModify.classList.add("modify")
+    logoModify.classList.add("fa-regular");
+    logoModify.classList.add("fa-pen-to-square");
+    linkModify.setAttribute("href", "#modale1");
+    linkModify.classList.add("modale_link");
+    linkModify.innerText = "modifier";
+    buttonFilter.appendChild(divModify);
+    divModify.appendChild(logoModify);
+    divModify.appendChild(linkModify);
+}

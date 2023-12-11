@@ -98,6 +98,11 @@ nav li {
 li:hover {
 	color: #B1663C;
 }
+
+.dispnone{
+	display: none;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -130,6 +135,12 @@ li:hover {
 .filtre{
 	text-align: center;
 	margin-bottom: 50px;
+}
+
+.modify{
+	position: relative;
+	bottom: 50px;
+	left: 160px;
 }
 
 .button{
@@ -199,7 +210,7 @@ li:hover {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-input[type="submit"]{
+.buttonAdd{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -299,11 +310,11 @@ footer nav ul {
 	position: relative;
 }
 
-.cards img{
+.cards_img{
 	width: 70px;
 }
 
-.cards i{
+.trashcan{
 	position: absolute;
 	color: white;
 	background-color: black;
@@ -345,6 +356,8 @@ footer nav ul {
 	width: 420px;
 	display: flex;
 	flex-direction: column;
+	border-bottom: 1px solid #B3B3B3;
+	padding-bottom: 40px;
 }
 
 .add__image{
@@ -366,6 +379,50 @@ footer nav ul {
 	font-size: 10px;
 	font-weight: 400;
 	color: #444444;
+}
+
+.close__modale2{
+	width: 100%;
+	padding: 0 10px 0 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.close__modale2 i{
+	font-size: 24px;
+}
+
+.add__image{
+	margin-bottom: 30px;
+}
+
+.form label{
+	font-size: 14px;
+	font-weight: 500;
+	color: #3D3D3D;
+	padding-bottom: 10px;
+
+}
+
+.form input, .form select{
+	height: 51px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	color: #6C6C6C;
+	margin-bottom: 20px;
+}
+
+.buttonValidateGray{
+	height: 36px;
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #FFFFFF;
+	background-color: #A7A7A7;
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px ;
+	border: none;
 }
 
 /** erreur**/

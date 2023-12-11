@@ -21,9 +21,10 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<a href="login.html"><li>login</li></a>
+			<a href="login.html"><li id="indexLogin">login</li></a>
+			<a href="index.html"><li id="indexLogout" class="dispnone">logout</li></a>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
+		</ul> 
 	</nav>
 </header>
 <main>
@@ -39,7 +40,7 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<a href="#modale1" class="modale_link">ouvrir la modale</a>
+		<!-- <a href="#modale1" class="modale_link">ouvrir la modale</a> -->
 		<h2>Mes Projets</h2>
 		<div class="filtre">
 			<button id="tous" class="button button_active">Tous</button>
@@ -83,10 +84,10 @@
 		</div>
 		<h3>Galerie photo</h3>
 		<div class="cards">
-
+			
 		</div>
 		<div class="card__input">
-			<input id="buttonAdd" type="submit" value="Ajouter une photo">
+			<input id="buttonAdd" class="buttonAdd" type="submit" value="Ajouter une photo">
 		</div>
 	</div>
 </aside>
@@ -97,19 +98,21 @@
 			<i id="closeModale2" class="fa-solid fa-xmark"></i>
 		</div>
 		<h3>Ajout photo</h3>
-		<div class="form">
+		<form class="form">
 			<div class="add__image">
 				<i class="fa-regular fa-image"></i>
 				<input type="file" name="file" id="file" accept=".jpg, .png">
 				<p>jpg, png : 4mo max</p>
 			</div>
 			<label for="titre">Titre</label>
-			<input type="text" name="" id="">
+			<input type="text" name="titre" id="titre">
 			<label for="categorie">Categorie</label>
-			<select name="categorie" id="categorie"></select>
-		</div>
-		<div class="card__input">
-			<input class="buttonOff" type="submit" value="Valider">
+			<select name="categorie" id="categorie">
+				<option value=""></option>
+			</select>
+		</form>
+		<div class="validate__input">
+			<input id="buttonValidate" class="buttonValidateGray" type="submit" value="Valider">
 		</div>
 	</div>
 </aside>
