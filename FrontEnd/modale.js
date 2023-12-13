@@ -1,4 +1,3 @@
-import { createElement } from "./Functions/dom.js";
 
 // récupération de la base de donner des catégorie
 const categories = await fetch("http://localhost:5678/api/categories").then(projet => projet.json());
@@ -62,57 +61,20 @@ export async function genererPhoto(projet) {
         const imageElement = document.createElement("img");
         imageElement.src = fiche.imageUrl;
         const logoCan = document.createElement("i");
-        logoCan.setAttribute("id", projet[i].id);
+        logoCan.setAttribute("data-id", projet[i].id);
         logoCan.classList.add("fa-solid");
         logoCan.classList.add("fa-trash-can");
-        ficheElement.appendChild(logoCan);
+        // ajout du click sur la poubelle
+        logoCan.addEventListener("click", function(event){
+            event.preventDefault();
+            handleClick(projet[i].id);
+        })
         // ajout du html 
+        ficheElement.appendChild(logoCan);
         cardsElement.appendChild(ficheElement);
         ficheElement.appendChild(imageElement);
-    }
-
-    class projects{
-
-        #cards = []
-    
-        constructor(cards){
-            this.#cards = cards
-        }
-        appendTo(element){
-            element.innerHTML = `<figure>
-            <button><i class="fa-solid fa-trash-can"></i></button>
-            <img src="" alt="">
-        </figure>`
-        }
-    }
-
-    class card{
-        constructor(card){
-            const figure = createElement("figure")
-            const button = createElement("button", {
-                class:"trashcan"
-            })
-            button.innerHTML = `<i class="fa-solid fa-trash-can"></i>`
-            const img = createElement("img", {
-                src:card.imageUrl,
-                class:"cards_img"
-            })
-        }
-    }
-    
-    
-    const list = new projects;
-    list.appendTo(document.querySelector(".cards"))
-    
+    }  
 }
-
-
-
-
-
-
-
-
 
 // fonction pour affiché la modale ajout photo.
 export async function affichageModaleAjoutPhoto() {
@@ -153,11 +115,12 @@ export async function genererCategorie(projet) {
         // creation d'une variable pour une fiche en fonction de i
         const fiche = categories[i];
         // récuperation de l'élémnent du DOM qui acceuillera les fiches.
-        const categorieElement = document.getElementById("categorie");
+        const categorieElement = document.getElementById("category");
         // création de la balise de la fiche.
         const optionElement = document.createElement("option");
         // Ajout du contenue da la balise option.
         optionElement.innerText = fiche.name;
+        optionElement.setAttribute("value", fiche.id);
         // Ajout de option dans le html.
         categorieElement.appendChild(optionElement);
     }
@@ -166,9 +129,9 @@ export async function genererCategorie(projet) {
 // Fonction qui change la couleur du bouton valider
 
 export async function changeColoreValidate(){
-    const photoElement = document.getElementById("file");
-    const titleElement = document.getElementById("titre");
-    const categorieElement = document.getElementById("categorie");
+    const photoElement = document.getElementById("fileInput");
+    const titleElement = document.getElementById("title");
+    const categorieElement = document.getElementById("category");
     const buttonValidate = document.getElementById("buttonValidate");
     buttonValidate.addEventListener("click", function() {
     })
@@ -203,19 +166,72 @@ export async function changeColoreValidate(){
 
 // Fonction qui charge l'image dans la modale une fois sélectionné.
 export async function loadingImage(){
-    const photoElement = document.getElementById("file");
-    photoElement.addEventListener("change", function() {
-        document.querySelector(".add__image").innerHTML = "";
-        console.log("evenement");
-        // const image = document.createElement("img");
-        // image.src = photoElement.value;
-        // formElement.appendChild(image);
-    })
+    const fileInput = document.getElementById("fileInput");
+    const imagePreviewContainer = document.getElementById('previewImageContainer');
+    // if (fileInput.files && fileInput.files.length > 0){
+        
+    //     const file = fileInput.files[0];
+
+    //     if(file.type.match('image.*')){
+    //         const reader = new FileReader();
+    //         reader.addEventListener("load", function(event) {
+    //             const imageUrl = event.target.result;
+    //             const image = new Image();
+    //             console.log(image);
+    //             image.addEventListener("load", function(){
+    //                 imagePreviewContainer.innerHTML = '';
+    //                 imagePreviewContainer.appendChild(image);
+    //             })
+    //             image.src = imageUrl;
+    //             image.style.width = '200px';
+    //             image.style.height = 'auto';
+    //         });
+    
+    //         reader.readAsDataURL(file);
+    //     }
+    // }
+    
+
+    
 }
+
 
 // fonction pour suprimé un projet.
 
-export async function can(){
-    const trashCan = document.querySelectorAll(".cards i");
-    console.log(trashCan);
+export async function handleClick(dataId){
+    const token = sessionStorage.getItem("token");
+    const response = await fetch(`http://localhost:5678/api/works/${dataId}`, {
+        method:"DELETE",
+        headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${token}`
+    }
+        
+    })
 }
+
+// fonction pour ajouter un projet.
+const form = document.forms.namedItem("fileinfo");
+form.addEventListener("submit", async function(event){
+    event.preventDefault();
+    const categoryElement = document.getElementById("category")
+    const token = sessionStorage.getItem("token");
+    const output = document.getElementById("output");
+    const formData = new FormData(form);
+    formData.set("category", categoryElement.value);
+    console.log(formData);
+    console.log(formData.get("image"));
+    console.log(formData.get("title"));
+    console.log(formData.get("category"));
+
+    const response = await fetch("http://localhost:5678/api/works", {
+        method:"POST",
+        headers: {
+            'Accept': 'application/json',
+            "Authorization": `Bearer ${token}`
+        },
+        body: formData
+    }).then(function(response){
+        output.innerHTML = response.status === 200 ? "fichier téléversé" : `Erreur ${response.status} lors de la tentative de téléversement du fichier.<br />`;
+    });
+});

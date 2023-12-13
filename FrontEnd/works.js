@@ -1,6 +1,6 @@
 import { fetchJson } from "./Functions/api.js";
 import { erreurPojet } from "./Functions/erreur.js";
-import { affichageModale, affichageModaleAjoutPhoto, can, changeColoreValidate, fermeModale, fermeModaleAjoutPhoto, genererCategorie, genererPhoto, loadingImage } from "./modale.js";
+import { affichageModale, affichageModaleAjoutPhoto, changeColoreValidate, fermeModale, fermeModaleAjoutPhoto, genererCategorie, genererPhoto, handleClick, loadingImage, } from "./modale.js";
 
 const token = sessionStorage.getItem("token");
 if(token){
@@ -13,7 +13,7 @@ if(token){
 try {
     // récupération de la base de donner des travaux
     const projet = await fetchJson("http://localhost:5678/api/works");
-    console.log(projet)
+
     // appelle de la fonction de création des fiches.
     genererWorks(projet);
     genererPhoto(projet);
@@ -50,7 +50,7 @@ try {
     // fonction affichage tous
     const buttonTous = document.getElementById("tous");
     buttonTous.addEventListener("click", function() {
-        console.log("tous");
+
         document.querySelector(".gallery").innerHTML = "";
         genererWorks(projet);
         deletClass ();
@@ -59,7 +59,7 @@ try {
     // fonction affichage objets
     const buttonObjets = document.getElementById("objets");
     buttonObjets.addEventListener("click", function() {
-        console.log("objet");
+
         document.querySelector(".gallery").innerHTML = "";
         const objetFilter = projet.filter((projet) => projet.category.id === 1);
         genererWorks(objetFilter);
@@ -69,7 +69,7 @@ try {
     // fonction affichage appartements
     const buttonAppartements = document.getElementById("appartements");
     buttonAppartements.addEventListener("click", function() {
-        console.log("appartements");
+
         document.querySelector(".gallery").innerHTML = "";
         const appartementsFilter = projet.filter((projet) => projet.category.id === 2);
         genererWorks(appartementsFilter);
@@ -79,7 +79,7 @@ try {
     // fonction affichage hotels & restaurants
     const buttonHotel = document.getElementById("hotels_restaurants");
     buttonHotel.addEventListener("click", function() {
-        console.log("hotels & restaurants");
+
         document.querySelector(".gallery").innerHTML = "";
         const hotelFilter = projet.filter((projet) => projet.category.id === 3);
         genererWorks(hotelFilter);
@@ -112,13 +112,13 @@ fermeModaleAjoutPhoto();
 genererCategorie();
 changeColoreValidate();
 loadingImage();
-can();
+handleClick();
 
-const file = document.getElementById("file")
+const file = document.getElementById("fileInput")
 file.addEventListener("change", function() {
-    console.log(file);
+    
 })
-console.log(file);
+
 
 // fonction de modification de la page quand on est log
 // fonction quand on est log

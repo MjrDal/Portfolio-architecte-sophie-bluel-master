@@ -98,23 +98,27 @@
 			<i id="closeModale2" class="fa-solid fa-xmark"></i>
 		</div>
 		<h3>Ajout photo</h3>
-		<form class="form">
-			<div class="add__image">
+		<form class="form" enctype="multipart/form-data" method="post" name="fileinfo">
+			<div id="addFile" class="add__image">
 				<i class="fa-regular fa-image"></i>
-				<input type="file" name="file" id="file" accept=".jpg, .png">
+				<input type="file" name="image" id="fileInput" accept=".jpg, .png" onchange="loadingImage()">
 				<p>jpg, png : 4mo max</p>
+				<div id="previewImageContainer"></div>
 			</div>
 			<label for="titre">Titre</label>
-			<input type="text" name="titre" id="titre">
+			<input type="text" name="title" id="title">
 			<label for="categorie">Categorie</label>
-			<select name="categorie" id="categorie">
+			<select name="category" id="category">
 				<option value=""></option>
+				
 			</select>
+			<div class="validate__input">
+				<input id="buttonValidate" class="buttonValidateGray" type="submit" value="Valider">
+			</div>
 		</form>
-		<div class="validate__input">
-			<input id="buttonValidate" class="buttonValidateGray" type="submit" value="Valider">
-		</div>
+		<div id="output"></div>
 	</div>
 </aside>
 </body>
 </html>
+

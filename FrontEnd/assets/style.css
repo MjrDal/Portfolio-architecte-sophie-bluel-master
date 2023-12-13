@@ -310,11 +310,11 @@ footer nav ul {
 	position: relative;
 }
 
-.cards_img{
+.cards img{
 	width: 70px;
 }
 
-.trashcan{
+.fa-trash-can{
 	position: absolute;
 	color: white;
 	background-color: black;
