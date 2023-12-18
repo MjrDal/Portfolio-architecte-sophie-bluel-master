@@ -43,10 +43,10 @@
 		<!-- <a href="#modale1" class="modale_link">ouvrir la modale</a> -->
 		<h2>Mes Projets</h2>
 		<div class="filtre">
-			<button id="tous" class="button button_active">Tous</button>
-			<button id="objets" class="button">Objets</button>
-			<button id="appartements" class="button">Appartements</button>
-			<button id="hotels_restaurants" class="button">Hotels & restaurants</button>
+			<button id="tous" class="button__filtre button_active">Tous</button>
+			<button id="objets" class="button__filtre">Objets</button>
+			<button id="appartements" class="button__filtre">Appartements</button>
+			<button id="hotels_restaurants" class="button__filtre">Hotels & restaurants</button>
 		</div>
 		<div class="gallery">
 
@@ -65,7 +65,7 @@
 			<input type="email" name="email" id="email">
 			<label for="message">Message</label>
 			<textarea name="message" id="message" cols="30" rows="10"></textarea>
-			<input type="submit" value="Envoyer">
+			<input type="submit" value="Envoyer" class="button">
 		</form>
 	</section>
 </main>
@@ -101,13 +101,14 @@
 		<form class="form" enctype="multipart/form-data" method="post" name="fileinfo">
 			<div id="addFile" class="add__image">
 				<i class="fa-regular fa-image"></i>
-				<input type="file" name="image" id="fileInput" accept=".jpg, .png" onchange="loadingImage()">
+				<label for="fileInput" class="button__file">+ Ajouter photo</label>
+				<input type="file" name="image" id="fileInput" accept=".jpg, .png" style="display: none;">
 				<p>jpg, png : 4mo max</p>
 				<div id="previewImageContainer"></div>
 			</div>
-			<label for="titre">Titre</label>
+			<label for="titre" class="label__input">Titre</label>
 			<input type="text" name="title" id="title">
-			<label for="categorie">Categorie</label>
+			<label for="categorie" class="label__input">Categorie</label>
 			<select name="category" id="category">
 				<option value=""></option>
 				

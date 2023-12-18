@@ -166,33 +166,24 @@ export async function changeColoreValidate(){
 
 // Fonction qui charge l'image dans la modale une fois sélectionné.
 export async function loadingImage(){
-    const fileInput = document.getElementById("fileInput");
-    const imagePreviewContainer = document.getElementById('previewImageContainer');
-    // if (fileInput.files && fileInput.files.length > 0){
-        
-    //     const file = fileInput.files[0];
-
-    //     if(file.type.match('image.*')){
-    //         const reader = new FileReader();
-    //         reader.addEventListener("load", function(event) {
-    //             const imageUrl = event.target.result;
-    //             const image = new Image();
-    //             console.log(image);
-    //             image.addEventListener("load", function(){
-    //                 imagePreviewContainer.innerHTML = '';
-    //                 imagePreviewContainer.appendChild(image);
-    //             })
-    //             image.src = imageUrl;
-    //             image.style.width = '200px';
-    //             image.style.height = 'auto';
-    //         });
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
     
-    //         reader.readAsDataURL(file);
-    //     }
-    // }
+        if (!file.type.startsWith("image/")) {
+          continue;
+        }
     
-
+        const img = document.createElement("img");
+        img.classList.add("obj");
+        img.file = file;
+        preview.appendChild(img); // Où  "preview" correspond à l'élément div où on affiche le contenu.
     
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } 
 }
 
 
@@ -214,6 +205,11 @@ export async function handleClick(dataId){
 const form = document.forms.namedItem("fileinfo");
 form.addEventListener("submit", async function(event){
     event.preventDefault();
+    const submitElement = document.getElementById("buttonValidate");
+    submitElement.addEventListener("submit", function(e){
+        e.preventDefault();
+    })
+
     const categoryElement = document.getElementById("category")
     const token = sessionStorage.getItem("token");
     const output = document.getElementById("output");
