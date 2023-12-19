@@ -9,43 +9,12 @@ if(token){
     modify();
 }
 
-
+// récupération de la base de donner des travaux
+const projet = await fetchJson("http://localhost:5678/api/works");
 try {
-    // récupération de la base de donner des travaux
-    const projet = await fetchJson("http://localhost:5678/api/works");
-
     // appelle de la fonction de création des fiches.
     genererWorks(projet);
     genererPhoto(projet);
-
-    // récupération de la base de donner des catégorie
-    const categories = await fetch("http://localhost:5678/api/categories").then(projet => projet.json());
-
-    // const reponse = await fetch('http://localhost:5678/api/works');
-    // const works = await reponse.json;
-    // const valeurPieces = JSON.stringify(works);
-
-    // fonction de génération des projet dans le html
-    function genererWorks(projet) {
-        for(let i = 0; i< projet.length ; i++){
-            // creation d'une variable pour une fiche en fonction de i
-            const fiche = projet[i];
-            // récuperation de l'élémnent du DOM qui acceuillera les fiches.
-            const galleryElement = document.querySelector(".gallery");
-            // création de la balise de la fiche.
-            const ficheElement = document.createElement("figure");
-            // création du html à l'intérieur de la fiche.
-            const imageElement = document.createElement("img");
-            imageElement.src = fiche.imageUrl;
-            const titleElement = document.createElement("figcaption");
-            titleElement.innerText = fiche.title;
-            // ajout du html 
-            galleryElement.appendChild(ficheElement);
-            ficheElement.appendChild(imageElement);
-            ficheElement.appendChild(titleElement);
-        }
-    }
-
 
     // fonction affichage tous
     const buttonTous = document.getElementById("tous");
@@ -86,6 +55,37 @@ try {
         deletClass ();
         addClass("hotels_restaurants");
     });
+} catch (error) {
+    erreurPojet ("impossible de charger les projets.")
+}
+
+
+    // fonction de génération des projet dans le html
+    function genererWorks(projet) {
+        const galleryElement = document.querySelector(".gallery")
+        galleryElement.innerHTML = '';
+        console.log("clear")
+        for(let i = 0; i< projet.length ; i++){
+            // creation d'une variable pour une fiche en fonction de i
+            const fiche = projet[i];
+            // récuperation de l'élémnent du DOM qui acceuillera les fiches.
+            const galleryElement = document.querySelector(".gallery");
+            // création de la balise de la fiche.
+            const ficheElement = document.createElement("figure");
+            // création du html à l'intérieur de la fiche.
+            const imageElement = document.createElement("img");
+            imageElement.src = fiche.imageUrl;
+            const titleElement = document.createElement("figcaption");
+            titleElement.innerText = fiche.title;
+            // ajout du html 
+            galleryElement.appendChild(ficheElement);
+            ficheElement.appendChild(imageElement);
+            ficheElement.appendChild(titleElement);
+        }
+    }
+
+
+    
 
     // fonction pour retirer la classe button_active
     function deletClass(){
@@ -99,9 +99,7 @@ try {
         const buttonElement = document.getElementById(id);
         buttonElement.classList.add("button_active");
     };
-} catch (error) {
-    erreurPojet ("impossible de charger les projets.")
-}
+
 
 
 // fonction pour afficher ou fermé les modales.
@@ -114,10 +112,7 @@ changeColoreValidate();
 loadingImage();
 handleClick();
 
-const file = document.getElementById("fileInput")
-file.addEventListener("change", function() {
-    
-})
+
 
 
 // fonction de modification de la page quand on est log
@@ -156,4 +151,11 @@ function modify(){
     buttonFilter.appendChild(divModify);
     divModify.appendChild(logoModify);
     divModify.appendChild(linkModify);
+}
+
+// Fonction pour mettre a jour le projet dans la page index et dans la modale.
+export async function update (){
+    genererWorks(projet);
+    genererPhoto(projet);
+    console.log("ca marche")
 }

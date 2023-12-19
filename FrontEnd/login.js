@@ -22,7 +22,7 @@ buttonLoginElement.addEventListener("submit", async function(event) {
     if(response.status == 200){
         console.log(data.token);
         sessionStorage.setItem("token", data.token);
-        location.assign("http://127.0.0.1:3000/FrontEnd/index.html");
+        location.assign("index.html");
     }else if(response.status == 404){
         notAuthorized("Utilisateur non trouver")
         console.log("ca marche pas");

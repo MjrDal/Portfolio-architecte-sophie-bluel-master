@@ -1,30 +1,32 @@
+import {update } from "./works.js";
 
 // récupération de la base de donner des catégorie
 const categories = await fetch("http://localhost:5678/api/categories").then(projet => projet.json());
-
 
 
 // fonction pour affiché la modale des images.
 export async function affichageModale(){
     const modale1 = document.querySelector(".modale_link");
     const back = document.getElementById("back");
+
     modale1.addEventListener("click", function(event){
         event.preventDefault();
-        const modaleElement = document.getElementById("modale1")
-        modaleElement.setAttribute("style", "display: flex;");
-        const modaleStop1 = document.getElementById("modale_stop1");
-        modaleStop1.addEventListener("click", function (e) {
-            e.stopPropagation();
-        })
+        attrubuteOpenModal()
     })
     back.addEventListener("click", function(event){
         event.preventDefault();
-        const modaleElement = document.getElementById("modale1")
-        modaleElement.setAttribute("style", "display: flex;");
-        const modaleStop1 = document.getElementById("modale_stop1");
-        modaleStop1.addEventListener("click", function (e) {
-            e.stopPropagation();
-        })
+        attrubuteOpenModal()
+    })
+
+}
+
+// fonction pour changer les attribut de la modale.
+function attrubuteOpenModal(){
+    const modaleElement = document.getElementById("modale1")
+    modaleElement.setAttribute("style", "display: flex;");
+    const modaleStop1 = document.getElementById("modale_stop1");
+    modaleStop1.addEventListener("click", function (e) {
+        e.stopPropagation();
     })
 }
 
@@ -50,6 +52,9 @@ export async function fermeModale() {
 
 // fonction de génération des photos dans la modale
 export async function genererPhoto(projet) {
+    const cardsElement = document.querySelector(".cards");
+    cardsElement.innerHTML = '';
+    console.log("clear dans modale") 
     for(let i = 0; i< projet.length ; i++){
         // creation d'une variable pour une fiche en fonction de i
         const fiche = projet[i];
@@ -95,17 +100,21 @@ export async function fermeModaleAjoutPhoto() {
     const modaleElementX = document.getElementById("closeModale2");
     const modale2 = document.getElementById("modale2");
     const back = document.getElementById("back");
+
     modale2.addEventListener("click", function(event) {
         event.preventDefault();
         modale2.setAttribute("style", "display: none;");
+
     })
     modaleElementX.addEventListener("click", function(event) {
         event.preventDefault();
         modale2.setAttribute("style", "display: none;");
+
     })
     back.addEventListener("click", function(event) {
         event.preventDefault();
         modale2.setAttribute("style", "display: none;");
+
     })
 }
 
@@ -165,7 +174,9 @@ export async function changeColoreValidate(){
 }
 
 // Fonction qui charge l'image dans la modale une fois sélectionné.
-export async function loadingImage(){
+export async function handleFiles(files){
+    const cardsElement = document.querySelector(".cards");
+    cardsElement.innerHTML = '';
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
     
@@ -176,7 +187,8 @@ export async function loadingImage(){
         const img = document.createElement("img");
         img.classList.add("obj");
         img.file = file;
-        preview.appendChild(img); // Où  "preview" correspond à l'élément div où on affiche le contenu.
+        const previewElement = document.getElementById("previewImageContainer");
+        previewElement.appendChild(img); // Où  "preview" correspond à l'élément div où on affiche le contenu.
     
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -185,7 +197,15 @@ export async function loadingImage(){
         reader.readAsDataURL(file);
       } 
 }
-
+export async function loadingImage(){
+    const filesElement = document.getElementById("fileInput");
+    filesElement.addEventListener("change", function(){
+        const selectFile = document.getElementById("selectFile");
+        selectFile.classList.remove("select__file");
+        selectFile.classList.add("dispnone");
+        handleFiles(this.files)
+    })
+}
 
 // fonction pour suprimé un projet.
 
@@ -198,7 +218,10 @@ export async function handleClick(dataId){
             "Authorization": `Bearer ${token}`
     }
         
-    })
+    }).then(async function(){
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        update();
+    });
 }
 
 // fonction pour ajouter un projet.
@@ -215,10 +238,6 @@ form.addEventListener("submit", async function(event){
     const output = document.getElementById("output");
     const formData = new FormData(form);
     formData.set("category", categoryElement.value);
-    console.log(formData);
-    console.log(formData.get("image"));
-    console.log(formData.get("title"));
-    console.log(formData.get("category"));
 
     const response = await fetch("http://localhost:5678/api/works", {
         method:"POST",
@@ -227,7 +246,18 @@ form.addEventListener("submit", async function(event){
             "Authorization": `Bearer ${token}`
         },
         body: formData
-    }).then(function(response){
-        output.innerHTML = response.status === 200 ? "fichier téléversé" : `Erreur ${response.status} lors de la tentative de téléversement du fichier.<br />`;
+    }).then(async function(response){
+        output.innerHTML = response.status === 201 ? "fichier téléversé" : `Erreur ${response.status} lors de la tentative de téléversement du fichier.<br />`;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        update();
+        const modale2 = document.getElementById("modale2");
+        modale2.setAttribute("style", "display: none;");
+        attrubuteOpenModal()
+        form.reset()
+        const selectFile = document.getElementById("selectFile");
+        selectFile.classList.add("select__file");
+        selectFile.classList.remove("dispnone");
+        const previewElement = document.getElementById("previewImageContainer");
+        previewElement.innerHTML = '';
     });
 });

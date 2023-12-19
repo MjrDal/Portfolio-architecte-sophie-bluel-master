@@ -100,11 +100,14 @@
 		<h3>Ajout photo</h3>
 		<form class="form" enctype="multipart/form-data" method="post" name="fileinfo">
 			<div id="addFile" class="add__image">
-				<i class="fa-regular fa-image"></i>
-				<label for="fileInput" class="button__file">+ Ajouter photo</label>
-				<input type="file" name="image" id="fileInput" accept=".jpg, .png" style="display: none;">
-				<p>jpg, png : 4mo max</p>
-				<div id="previewImageContainer"></div>
+				<div id="selectFile" class="select__file">
+					<i class="fa-regular fa-image"></i>
+					<label for="fileInput" class="button__file">+ Ajouter photo</label>
+					<input type="file" name="image" id="fileInput" accept=".jpg, .png" style="display: none;">
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<div id="previewImageContainer">
+				</div>
 			</div>
 			<label for="titre" class="label__input">Titre</label>
 			<input type="text" name="title" id="title">
