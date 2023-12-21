@@ -2,12 +2,7 @@ import { fetchJson } from "./Functions/api.js";
 import { erreurPojet } from "./Functions/erreur.js";
 import { affichageModale, affichageModaleAjoutPhoto, changeColoreValidate, fermeModale, fermeModaleAjoutPhoto, genererCategorie, genererPhoto, handleClick, loadingImage, } from "./modale.js";
 
-const token = sessionStorage.getItem("token");
-if(token){
-    login();
-    hiddenFilter();
-    modify();
-}
+
 
 // récupération de la base de donner des travaux
 const projet = await fetchJson("http://localhost:5678/api/works");
@@ -55,6 +50,14 @@ try {
         deletClass ();
         addClass("hotels_restaurants");
     });
+
+
+    const token = sessionStorage.getItem("token");
+    if(token){
+        login();
+        hiddenFilter();
+        modify();
+}
 } catch (error) {
     erreurPojet ("impossible de charger les projets.")
 }
@@ -155,6 +158,7 @@ function modify(){
 
 // Fonction pour mettre a jour le projet dans la page index et dans la modale.
 export async function update (){
+    const projet = await fetchJson("http://localhost:5678/api/works");
     genererWorks(projet);
     genererPhoto(projet);
     console.log("ca marche")

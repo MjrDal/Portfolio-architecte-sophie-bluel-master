@@ -89,6 +89,8 @@ export async function affichageModaleAjoutPhoto() {
         const modaleElement = document.getElementById("modale2")
         modaleElement.setAttribute("style", "display: flex;");
         const modaleStop2 = document.getElementById("modale_stop2");
+        const output = document.getElementById("output");
+        output.innerHTML = '';
         modaleStop2.addEventListener("click", function (e) {
             e.stopPropagation();
         })
@@ -219,7 +221,7 @@ export async function handleClick(dataId){
     }
         
     }).then(async function(){
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 500));
         update();
     });
 }
